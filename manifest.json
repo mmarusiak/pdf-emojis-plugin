@@ -1,7 +1,7 @@
 {
 	"id": "pdf-emojis",
 	"name": "PDF Emojis",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"minAppVersion": "0.15.0",
 	"description": "Helps you exporting all your emojis to pdf (even those in headings)!",
 	"author": "Marcel Marusiak",
