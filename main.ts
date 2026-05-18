@@ -89,10 +89,15 @@ export default class PDFEmoji extends Plugin {
                 const numStr = match[1];
                 const rest = firstTextNode.nodeValue.slice(numStr.length);
                 const numSpan = document.createElement('span');
+                numSpan.className = 'pdf-heading-number';
                 numSpan.style.setProperty('display', 'inline', 'important');
                 numSpan.style.setProperty('visibility', 'visible', 'important');
                 numSpan.style.setProperty('opacity', '1', 'important');
-                numSpan.textContent = numStr;
+                numSpan.style.setProperty('color', 'inherit', 'important');
+                numSpan.style.setProperty('font-size', 'inherit', 'important');
+                // U+2060 (Word Joiner) is zero-width and invisible, but breaks
+                // Obsidian's PDF auto-numbering regex that matches /^\d/ on heading text
+                numSpan.textContent = '⁠' + numStr;
                 const parent = firstTextNode.parentNode!;
                 parent.insertBefore(numSpan, firstTextNode);
                 if (rest) parent.insertBefore(document.createTextNode(rest), firstTextNode);
