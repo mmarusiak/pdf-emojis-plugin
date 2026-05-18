@@ -74,8 +74,13 @@ export default class PDFEmoji extends Plugin {
                 }
             });
 
-            // Protect leading numbers in headings (e.g. "1. " or "1.2. ") from disappearing in PDF export
-            element.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+            // Protect leading numbers in headings (e.g. "1. " or "1.2. ") from disappearing in PDF export.
+            // element itself may be the heading (Obsidian calls the post-processor with the block element
+            // directly), so we include it alongside any heading descendants.
+            const headingElements = [element, ...Array.from(element.querySelectorAll('h1, h2, h3, h4, h5, h6'))]
+                .filter(el => /^H[1-6]$/.test(el.tagName));
+
+            headingElements.forEach((heading) => {
                 const textWalker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT, null);
                 const firstTextNode = textWalker.nextNode() as Text | null;
                 if (!firstTextNode || !firstTextNode.nodeValue) return;
@@ -85,6 +90,8 @@ export default class PDFEmoji extends Plugin {
                 const rest = firstTextNode.nodeValue.slice(numStr.length);
                 const numSpan = document.createElement('span');
                 numSpan.style.setProperty('display', 'inline', 'important');
+                numSpan.style.setProperty('visibility', 'visible', 'important');
+                numSpan.style.setProperty('opacity', '1', 'important');
                 numSpan.textContent = numStr;
                 const parent = firstTextNode.parentNode!;
                 parent.insertBefore(numSpan, firstTextNode);
