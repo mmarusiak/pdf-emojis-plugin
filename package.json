@@ -1,6 +1,6 @@
 {
 	"name": "pdf-emojis",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Helps you exporting all your emojis to pdf (even those in headings)!",
 	"main": "main.js",
 	"scripts": {

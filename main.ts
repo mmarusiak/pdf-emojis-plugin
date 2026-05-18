@@ -46,6 +46,8 @@ export default class PDFEmoji extends Plugin {
                             if (!isPlainChar) {
                                 const span = document.createElement("span");
                                 span.className = "emoji";
+                                span.style.setProperty('font-weight', 'normal', 'important');
+                                span.style.setProperty('font-style', 'normal', 'important');
                                 span.textContent = emoji;
                                 newNodes.push(span);
                             } else {
@@ -70,6 +72,24 @@ export default class PDFEmoji extends Plugin {
                     newNodes.forEach(newNode => parent.insertBefore(newNode, node));
                     parent.removeChild(node);
                 }
+            });
+
+            // Protect leading numbers in headings (e.g. "1. " or "1.2. ") from disappearing in PDF export
+            element.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+                const textWalker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT, null);
+                const firstTextNode = textWalker.nextNode() as Text | null;
+                if (!firstTextNode || !firstTextNode.nodeValue) return;
+                const match = firstTextNode.nodeValue.match(/^(\d+(?:\.\d+)*\.\s*)/);
+                if (!match) return;
+                const numStr = match[1];
+                const rest = firstTextNode.nodeValue.slice(numStr.length);
+                const numSpan = document.createElement('span');
+                numSpan.style.setProperty('display', 'inline', 'important');
+                numSpan.textContent = numStr;
+                const parent = firstTextNode.parentNode!;
+                parent.insertBefore(numSpan, firstTextNode);
+                if (rest) parent.insertBefore(document.createTextNode(rest), firstTextNode);
+                parent.removeChild(firstTextNode);
             });
         });
     }
