@@ -2,3 +2,29 @@
     font-weight: normal !important;
     font-style: normal !important;
 }
+
+.pdf-heading-number {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    font-size: inherit !important;
+}
+
+@media print {
+    .pdf-heading-number {
+        display: inline !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: inherit !important;
+        font-size: inherit !important;
+    }
+
+    h1::first-letter, h2::first-letter, h3::first-letter,
+    h4::first-letter, h5::first-letter, h6::first-letter {
+        font-size: inherit !important;
+        color: inherit !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
