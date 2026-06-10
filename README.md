@@ -1,4 +1,4 @@
-![GitHub Downloads](https://img.shields.io/github/downloads/mmarusiak/pdf-emojis-plugin/total?color=573E7A&logo=github&style=flat-square)
+![GitHub Downloads](https://img.shields.io/github/downloads/mmarusiak/pdf-emojis-plugin/total?logo=github&style=for-the-badge)
 
 # PDF Emojis plugin🥳
 
